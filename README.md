@@ -87,7 +87,7 @@ Texas Hold'em Poker Tournament Game is a complete poker simulation where you com
 | Main Menu | Game Table | Win Screen |
 |----------|------------|-----------|
 | ![](https://via.placeholder.com/300x200) | ![](https://via.placeholder.com/300x200) | ![](https://via.placeholder.com/300x200) |
-
+Will be added soon!!!
 ---
 
 ## 🎲 How to Play
