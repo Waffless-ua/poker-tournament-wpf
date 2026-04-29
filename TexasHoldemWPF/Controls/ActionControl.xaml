@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="TexasHoldemWPF.Controls.ActionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:TexasHoldemWPF.Resources.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="100">
+    <UserControl.Resources>
+        <converters:ActionToVisibilityConverter x:Key="ActionToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Visibility="{Binding ActionText, Converter={StaticResource ActionToVisibilityConverter}}">
+        <Border CornerRadius="4" Background="{Binding BackgroundColor, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Border.LayoutTransform>
+                <SkewTransform AngleX="-15"/>
+            </Border.LayoutTransform>
+            <TextBlock Text="{Binding ActionText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   Foreground="White" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="10,2"/>
+        </Border>
+    </Grid>
+
+</UserControl>

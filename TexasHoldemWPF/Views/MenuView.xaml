@@ -1,0 +1,97 @@
+﻿<Page x:Class="TexasHoldemWPF.Views.MenuView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TexasHoldemWPF.Views"
+      xmlns:controls="clr-namespace:TexasHoldemWPF.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MenuView">
+    <Page.Resources>
+        <Style x:Key="TransparentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF0078D7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="360">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#0066CC"/>
+                                <Setter TargetName="border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="5" ShadowDepth="2" Color="#400078D7"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#004D99"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/Menu-background.jpg"
+            Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="RulesButton"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="0,10,20,0"
+            Width="40"
+            Height="40"
+            Command="{Binding ShowRulesCommand}"
+            Style="{StaticResource TransparentButtonStyle}"
+            ToolTip="Show poker rules">
+            <Image Source="pack://application:,,,/Resources/Icons/QMark.png"
+               Stretch="Uniform"/>
+        </Button>
+        <controls:BalanceControl 
+            Balance="{Binding PlayerBalance}"
+            AddMoneyCommand="{Binding AddMoneyCommand}"
+            HorizontalAlignment="Center"
+            Margin="0, 20, 0, 0"/>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Tournaments}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <controls:MenuControl Margin="10" 
+                                          City="{Binding City}"
+                                          Prize="{Binding Prize}"
+                                          BuyIn="{Binding BuyIn}"
+                                          ImagePath="{Binding ImagePath}"
+                                                         Command="{Binding Path=DataContext.StartTournamentCommand, 
+                         RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                          CommandParameter="{Binding}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Page>
