@@ -176,19 +176,29 @@ The project follows MVVM:
 
 ## 📐 Programming Principles
 
-- SOLID principles  
-- DRY  
-- Separation of concerns  
+| # | Principle | Implementation | File Reference |
+|---|----------|---------------|----------------|
+| 1 | Single Responsibility | Each class has one clear purpose. HandEvaluator only evaluates hands; Deck only manages cards; BotPlayer only handles bot logic. | Models/Utilities/HandEvaluator.cs, Models/Entities/Deck.cs |
+| 2 | Open/Closed | Classes are open for extension but closed for modification. New bot strategies can be added without modifying BotPlayer or existing strategies. | Models/Strategies/IBotStrategy.cs |
+| 3 | Liskov Substitution | Derived classes can replace base classes without affecting program correctness. BotPlayer inherits from Player and can replace it anywhere in the codebase. | Models/Entities/BotPlayer.cs |
+| 4 | Interface Segregation | Interfaces are specific and focused. IBotStrategy contains only decision-making methods; IGameState only state management methods. | Models/Strategies/IBotStrategy.cs, Models/States/IGameState.cs |
+| 5 | Dependency Inversion | Depend on abstractions, not concrete implementations. GameViewModel depends on IGameState abstraction, not concrete state classes. | ViewModels/GameViewModel.cs |
+| 6 | DRY (Don't Repeat Yourself) | Avoid code duplication. DecisionContext consolidates parameters; PlayerFactory centralizes player creation; GetActivePlayers() reused across multiple managers. | Models/Strategies/DecisionContext.cs, Models/Factory/PlayerFactory.cs |
+| 7 | Separation of Concerns | Different concerns are separated into distinct classes. Game logic (GameViewModel), UI binding (BaseViewModel), bot decisions (Strategies), game flow (States), and data persistence are all separated. | Entire project structure |
 
 ---
 
 ## ♻️ Refactoring Techniques
 
-- Extract Method  
-- Extract Class  
-- Replace Conditional with Polymorphism  
-- Introduce Parameter Object  
-
+| # | Technique | Description | Applied In |
+|---|----------|-------------|-------------|
+| 1 | Extract Method | Breaking large methods into smaller, focused, and reusable methods. | IsBettingRoundComplete(), ClearPlayerActions(), DealCommunityCards(), GetActivePlayers(), ShouldSkipBot() |
+| 2 | Extract Class | Moving related logic and data into separate classes to improve cohesion. | HandEvaluator → extracted from GameViewModel; PlayerFactory → centralized player creation; DecisionContext → groups bot decision parameters |
+| 3 | Replace Conditional with Polymorphism | Replacing complex conditional logic (switch/if-else) with polymorphic method calls. | Replaced switch on _gameState with State Pattern (PreFlopState, FlopState, TurnState, RiverState) |
+| 4 | Introduce Parameter Object | Grouping related method parameters into a single object to reduce method complexity. | DecisionContext class consolidates parameters (handStrength, potOdds, currentBet, potSize, balance, communityCardsCount) |
+| 5 | Replace Type Code with Strategy | Replacing type codes that control behavior with strategy objects. | Replaced _aggressionFactor and _tightness with Strategy Pattern (AggressiveStrategy, ConservativeStrategy, TightStrategy, LooseStrategy) |
+| 6 | Encapsulate Field | Hiding fields and exposing them through properties with getters/setters. | All model classes use INotifyPropertyChanged (Card.cs, Player.cs, Tournament.cs) |
+| 7 | Rename Method | Changing method names to better reflect their purpose and improve readability. | PostBlinds(), TransitionToState(), GetActivePlayers() |
 ---
 
 ## 📁 Project Structure
