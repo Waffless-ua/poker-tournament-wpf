@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using TexasHoldemWPF.Enums;
 using TexasHoldemWPF.Models.Entities;
 using TexasHoldemWPF.Models.Factory;
+using TexasHoldemWPF.Models.Factory.BotFactories;
 using TexasHoldemWPF.Models.States;
 using TexasHoldemWPF.Resources;
 using TexasHoldemWPF.Views;
@@ -188,14 +189,22 @@ namespace TexasHoldemWPF.ViewModels
             _deck = new Deck();
             _deck.Shuffle();
 
-            _players = new List<Player>
+            _players = new List<Player>();
+
+            var factories = new List<IPlayerFactory>
             {
-                PlayerFactory.CreatePlayer(PlayerType.Human, _buyIn),
-                PlayerFactory.CreatePlayer(PlayerType.AggressiveBot, _buyIn),
-                PlayerFactory.CreatePlayer(PlayerType.ConservativeBot, _buyIn),
-                PlayerFactory.CreatePlayer(PlayerType.TightBot, _buyIn),
-                PlayerFactory.CreatePlayer(PlayerType.LooseBot, _buyIn)
+                new HumanPlayerFactory(),
+                new BotAggresiveFactory(),
+                new BotConservativeFactory(),
+                new BotLooseFactory(),
+                new BotTightFactory()
             };
+
+            _players = factories
+                .Select(f => f.CreatePlayer(_buyIn))
+                .ToList();
+
+
 
             PlayerBalance = _buyIn;
             PotSize = 0;

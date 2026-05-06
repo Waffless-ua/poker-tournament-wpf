@@ -102,13 +102,19 @@
       <DependentUpon>PlayerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\GameState.cs" />
+    <Compile Include="Enums\PlayerType.cs" />
     <Compile Include="Models\Entities\BotPlayer.cs" />
     <Compile Include="Models\Entities\Card.cs" />
     <Compile Include="Models\Entities\Deck.cs" />
     <Compile Include="Models\Entities\Player.cs" />
     <Compile Include="Models\Entities\PokerHand.cs" />
     <Compile Include="Models\Entities\Tournament.cs" />
-    <Compile Include="Models\Factory\PlayerFactory.cs" />
+    <Compile Include="Models\Factory\BotFactories\BotAggresiveFactory.cs" />
+    <Compile Include="Models\Factory\BotFactories\BotLooseFactory.cs" />
+    <Compile Include="Models\Factory\BotFactories\BotTightFactory.cs" />
+    <Compile Include="Models\Factory\BotFactories\BotConservativeFactory.cs" />
+    <Compile Include="Models\Factory\IPlayerFactory.cs" />
+    <Compile Include="Models\Factory\HumanPlayerFactory.cs" />
     <Compile Include="Models\States\FlopState.cs" />
     <Compile Include="Models\States\IGameState.cs" />
     <Compile Include="Models\States\PreFlopState.cs" />
@@ -122,6 +128,7 @@
     <Compile Include="Models\Strategies\IBotStrategy.cs" />
     <Compile Include="Models\Strategies\LooseStrategy.cs" />
     <Compile Include="Models\Strategies\TightStrategy.cs" />
+    <Compile Include="Models\Utilities\BotNameGenerator.cs" />
     <Compile Include="Models\Utilities\HandEvaluator.cs" />
     <Compile Include="Resources\Converters\ActionToColorConverter.cs" />
     <Compile Include="Resources\Converters\ActionToVisibilityConverter.cs" />
